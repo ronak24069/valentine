@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Will you be my Valentine?</title>
+
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #f8b6c1, #f6d3dc);
+    font-family: "Segoe UI", sans-serif;
+  }
+
+  .card {
+    background: #fff;
+    width: 90%;
+    max-width: 520px;
+    padding: 35px 25px 40px;
+    border-radius: 28px;
+    text-align: center;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+    position: relative;
+  }
+
+  .avatar {
+    font-size: 48px;
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-size: 22px;
+    color: #333;
+    margin-bottom: 35px;
+  }
+
+  .play-area {
+    position: relative;
+    height: 140px;
+  }
+
+  button {
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    position: absolute;
+  }
+
+  #yes {
+    background: #ff4d6d;
+    color: white;
+    font-size: 22px;
+    padding: 18px 42px;
+    left: 50%;
+    top: 60px;
+    transform: translateX(-50%);
+  }
+
+  #no {
+  background: #f2f2f2;
+  color: #555;
+  font-size: 14px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  left: 60%;
+  top: 30px;
+}
+#no:hover {
+  background: #eaeaea;
+}
+
+
+  .hint {
+    margin-top: 25px;
+    font-size: 13px;
+    color: #777;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <div class="avatar">🐱💗</div>
+
+  <h1>Will you be my valentine?</h1>
+
+  <div class="play-area" id="area">
+    <button id="no">No</button>
+    <button id="yes" onclick="yesClicked()">Yes</button>
+  </div>
+
+  <div class="hint">“No” seems a bit shy 😈</div>
+</div>
+
+<script>
+  const noBtn = document.getElementById("no");
+  const yesBtn = document.getElementById("yes");
+  const area = document.getElementById("area");
+
+  let yesScale = 1;
+
+  function moveNo() {
+    const areaRect = area.getBoundingClientRect();
+    const btnRect = noBtn.getBoundingClientRect();
+
+    const maxX = areaRect.width - btnRect.width - 20;
+    const maxY = areaRect.height - btnRect.height - 20;
+
+    // subtle movement (not chaos)
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY * 0.6;
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+
+    // YES grows every attempt
+    yesScale += 0.15;
+    yesBtn.style.transform = `translateX(-50%) scale(${yesScale})`;
+  }
+
+  noBtn.addEventListener("mouseenter", moveNo);
+  noBtn.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    moveNo();
+  });
+
+  function yesClicked() {
+    document.body.innerHTML = `
+      <div style="
+        height:100vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        background:linear-gradient(135deg,#f8b6c1,#f6d3dc);
+        font-family:'Segoe UI', sans-serif;
+        text-align:center;
+      ">
+        <h1 style="font-size:42px;color:white;">
+          YAY 💖🥹<br>
+          You’re my valentine
+        </h1>
+      </div>
+    `;
+  }
+</script>
+
+</body>
+</html>
